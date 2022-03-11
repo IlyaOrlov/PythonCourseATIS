@@ -5,9 +5,9 @@ import json
 class SqlWrapper:
     def __init__(self, dbname):
         self.db_name = dbname
-        self.conn = sqlite3.connect(self.db_name)
 
     def __enter__(self):
+        self.conn = sqlite3.connect(self.db_name)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
