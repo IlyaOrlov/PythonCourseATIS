@@ -21,7 +21,7 @@ class Money:
             self.sum_rub += 1
             self.sum_kop = self.sum_kop - 100
         res = self.sum_rub + self.sum_kop / 100
-        return res
+        return Money(res)
 
     def __sub__(self, other):
         self.sub_rub = self.rub - other.rub
@@ -31,36 +31,54 @@ class Money:
             self.sub_rub -= 1
             self.sub_kop = self.sub_kop + 100
         res = self.sub_rub + self.sub_kop / 100
-        return res
+        return Money(res)
 
     def __truediv__(self, other):
-        res = (self.num * 100) / (other.num * 100)
-        return res
+        if isinstance(other, Money) and other != 0:
+            res = self.num / other.num
+            return Money(res)
+        elif other != 0:
+            res = self.num / other
+            return Money(res)
+        else:
+            return "can't divide by zero"
 
     def __str__(self):
-        return f"{self.rub},{self.kop}"
+        return f"{str(round(self.num, 2)).replace('.', ',')}"
 
     def __lt__(self, other):
-        pass
+        if self.num < other.num:
+            return True
+        else:
+            return False
 
     def __le__(self, other):
-        pass
+        if self.num <= other.num:
+            return True
+        else:
+            return False
 
     def __gt__(self, other):
-        pass
+        if self.num > other.num:
+            return True
+        else:
+            return False
 
     def __ge__(self, other):
-        pass
+        if self.num >= other.num:
+            return True
+        else:
+            return False
 
 
-s1 = Money(2500.50)
-s2 = Money(500.00)
+s1 = Money(2500.05)
+s2 = Money(500.02)
 s3 = Money(499.50)
+a = s1 + s2 + s3
+s = s2 - s3
+d = s1 / 500.01
 
-print(s1.exchange())
-print(s2.exchange())
-print(s3.exchange())
-
-print(f'{s1 + s3 = }')
-print(f'{s2 - s3 = }')
-print(f'{s1 / s2 = }')
+print(a)
+print(s)
+print(d)
+print(s1 < s2)
