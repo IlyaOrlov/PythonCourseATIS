@@ -36,39 +36,28 @@ class Money:
     def __truediv__(self, other):
         if isinstance(other, Money) and other != 0:
             res = self.num / other.num
-            return Money(res)
+            return res
         elif other != 0:
             res = self.num / other
             return Money(res)
         else:
-            return "can't divide by zero"
+            print("can't divide by zero")
+            return None
 
     def __str__(self):
         return f"{str(round(self.num, 2)).replace('.', ',')}"
 
     def __lt__(self, other):
-        if self.num < other.num:
-            return True
-        else:
-            return False
+        return self.num < other.num
 
     def __le__(self, other):
-        if self.num <= other.num:
-            return True
-        else:
-            return False
+        return self.num <= other.num
 
     def __gt__(self, other):
-        if self.num > other.num:
-            return True
-        else:
-            return False
+        return self.num > other.num
 
     def __ge__(self, other):
-        if self.num >= other.num:
-            return True
-        else:
-            return False
+        return self.num >= other.num
 
 
 s1 = Money(2500.05)
