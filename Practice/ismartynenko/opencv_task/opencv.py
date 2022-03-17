@@ -40,48 +40,17 @@ def counter(img_file, params):
 
     point_x = (params[0] + params[2]) / 2
     point_y = (params[1] + params[3]) / 2
-    dim_x = params[2] - params[0]
-    dim_y = params[3] - params[1]
-
-    # Quart I
-    if point_x < img_w/2 and point_y < img_h/2:
-        point_x -= dim_x/2
-        point_y -= dim_y/2
-    # Quart II
-    elif point_x > img_w/2 and point_y < img_h/2:
-        point_x += dim_x/2
-        point_y -= dim_y/2
-    # Quart III
-    elif point_x > img_w/2 and point_y > img_h/2:
-        point_x += dim_x/2
-        point_y += dim_y/2
-    # Quart IV
-    elif point_x < img_w/2 and point_y > img_h/2:
-        point_x -= dim_x/2
-        point_y += dim_y/2
 
     center_x = int(img_w/2)
     center_y = int(img_h/2)
     rad = int(math.hypot(center_x - point_x, center_y - point_y))
-    crop_img = img[center_y - rad:center_y + rad, center_x - rad:center_x + rad]
 
-    NUM_SIZE = 42
-    _, crop_img_x, _ = crop_img.shape
-    num_img = crop_img[0:NUM_SIZE, int(crop_img_x/2 - NUM_SIZE/2):int(crop_img_x/2 - NUM_SIZE/2) + NUM_SIZE]
-    num_file = f'num_{os.path.basename(img_file)}'
-    cv2.imwrite(num_file, num_img)
-
-    max_match = 0
-    num = '0'
-    source = r'C:\Users\dfyz\PycharmProjects\PythonCourseATIS\Practice\ismartynenko\opencv_task\nums\\'
-    for i in os.listdir(source):
-        match_val, _ = image_match_template(num_file, source+i)
-        if match_val > max_match:
-            max_match = match_val
-            num = i.replace(".jpg", "")
+    num = 0
+    tup = (439, 398, 357, 316, 275, 234, 193, 152, 111, 70)
+    for i, j in enumerate(tup, start=1):
+        if rad <= j:
+            num = i
     print(num)
-    # cv2.imshow("Crop", num_img)
-    # cv2.waitKey(5000)
 
 
 if __name__ == "__main__":
